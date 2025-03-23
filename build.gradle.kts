@@ -39,3 +39,7 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.javadoc {
+	options.encoding = "UTF-8"
+}

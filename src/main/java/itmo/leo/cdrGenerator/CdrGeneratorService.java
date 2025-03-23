@@ -14,7 +14,7 @@ import java.util.Random;
 
 
 /**
- * CdrGeneratorService generate cdr's
+ * Сервис для генерации записей CDR.
  */
 @Service
 public class CdrGeneratorService {
@@ -31,12 +31,19 @@ public class CdrGeneratorService {
     private final Integer maxNumberOfCalls = 100000;
 
     /**
-     * generateCdr generate
+     * Генерирует записи CDR.
+     * <p>
+     * Записи создаются на основе случайно выбранных абонентов, типов вызовов и длительности звонка.
+     * Результирующий список сохраняется в репозитории.
+     * </p>
      */
-    public void generateCdr() {
+    public Integer generateCdr() {
 
         Integer numberOfCalls = generateCallsAmount();
         List<SubscriberDao> list = subsRepository.findAll();
+        if (list.isEmpty()) {
+            throw new RuntimeException("Subscriber table is empty");
+        }
         List<CdrRecordDao> cdrRecords = new ArrayList<>();
 
         LocalDateTime startDate = LocalDateTime.of(2025, 1, 1, 0, 0, 0);
@@ -57,25 +64,52 @@ public class CdrGeneratorService {
             startDate = startDate.plusSeconds(step + generateTimeShift(step));
         }
 
-        cdrRepository.saveAll(cdrRecords);
+        return cdrRepository.saveAll(cdrRecords).size();
     }
 
+    /**
+     * Генерирует случайное смещение времени в пределах заданной границы.
+     *
+     * @param boundary граница для генерации смещения
+     * @return смещение времени в секундах
+     */
     private Long generateTimeShift(Long boundary) {
         return generator.nextLong() % boundary;
     }
 
+    /**
+     * Генерирует длительность звонка в секундах.
+     *
+     * @return длительность звонка в секундах
+     */
     private Long generateCallLength() {
         return generator.nextLong(maxCallLength);
     }
 
+    /**
+     * Возвращает случайного абонента из списка.
+     *
+     * @param list список абонентов
+     * @return случайно выбранный абонент
+     */
     private SubscriberDao getRandomSubs(List<SubscriberDao> list) {
         return list.get(generator.nextInt(list.size()));
     }
 
+    /**
+     * Генерирует количество звонков в заданном диапазоне.
+     *
+     * @return количество звонков
+     */
     private Integer generateCallsAmount() {
         return generator.nextInt(minNumberOfCalls, maxNumberOfCalls);
     }
 
+    /**
+     * Генерирует тип звонка.
+     *
+     * @return 1 или 2, в зависимости от случайного выбора
+     */
     private Integer generateCallType() {
         return generator.nextBoolean() ? 1 : 2;
     }
