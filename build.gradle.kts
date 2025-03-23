@@ -32,8 +32,6 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-//	implementation("javax.transaction:javax.transaction-api:1.2")
-//	implementation("javax.persistence:javax.persistence-api:2.2")
 }
 
 tasks.withType<Test> {
