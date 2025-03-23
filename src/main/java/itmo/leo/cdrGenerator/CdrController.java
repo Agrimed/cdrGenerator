@@ -1,15 +1,15 @@
 package itmo.leo.cdrGenerator;
 
+import itmo.leo.cdrGenerator.model.UdrDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
-//@RequestMapping("cdr")
+@RestController
 public class CdrController {
 
     @Autowired
@@ -18,22 +18,28 @@ public class CdrController {
     @Autowired
     private CdrGeneratorService cdrGeneratorService;
 
-    @GetMapping("/cdr")
-    public String viewHomePage(Model model) {
-        model.addAttribute("userName", "Kirill");
-        return "cdr";
-    }
+    @Autowired
+    private UdrGeneratorService udrGeneratorService;
 
     @GetMapping("/cdr/genSubs")
-    public String genSubsPage(Model model) {
+    public String genSubsPage() {
         subsGeneratorService.generateSubs(50);
         return "cdr";
     }
 
     @GetMapping("/cdr/genCdr")
-    public String genCdr(Model model) {
+    public String genCdr() {
         cdrGeneratorService.generateCdr();
         return "cdr";
     }
 
+    @GetMapping("/udr/{msisdn}")
+    public UdrDto getUdrByMsisdn(@PathVariable String msisdn) {
+        return udrGeneratorService.getUdr(msisdn);
+    }
+
+    @GetMapping("/udr/{msisdn}/{month}")
+    public UdrDto hetUdrByMsisdnAndMonth(@PathVariable String msisdn, @PathVariable Integer month) {
+        return udrGeneratorService.getUdrByMonth(msisdn, month);
+    }
 }

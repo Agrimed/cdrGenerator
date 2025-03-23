@@ -5,10 +5,6 @@ import itmo.leo.cdrGenerator.persistent.SubsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,7 +12,7 @@ import java.util.Random;
 @Service
 public class SubsGeneratorService {
 
-//    private final static int SUBS_AMOUNT = 15;
+    //    private final static int SUBS_AMOUNT = 15;
     private final Random random = new Random();
     @Autowired
     private SubsRepository subsRepository;
@@ -35,8 +31,9 @@ public class SubsGeneratorService {
 
     /**
      * getRandomSubsId
-     * @param list  list of subscribers
-     * @return  random subscriber id
+     *
+     * @param list list of subscribers
+     * @return random subscriber id
      */
     private Long getRandomSubsId(List<SubscriberDao> list) {
         Integer index = random.nextInt() % list.size();

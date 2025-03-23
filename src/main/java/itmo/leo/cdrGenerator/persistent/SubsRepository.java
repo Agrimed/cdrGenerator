@@ -13,4 +13,6 @@ public interface SubsRepository extends JpaRepository<SubscriberDao, Long> {
     @Query(value = "select max(msisdn) from subscriber", nativeQuery = true)
     Optional<String> findMaxMsisdn();
 
+    Optional<SubscriberDao> findByMsisdn(String msisdn);
+
 }

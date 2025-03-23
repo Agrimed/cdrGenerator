@@ -17,9 +17,8 @@ public class CdrRecordDao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "call_type") private Integer callType;
-//    @Column(name = "subsA_id") private Long subsAId;
-//    @Column(name = "subsB_id") private Long subsBId;
+    @Column(name = "call_type")
+    private Integer callType;
     @ManyToOne
     @JoinColumn(name = "subsA_id", referencedColumnName = "id")
     private SubscriberDao subsA;
@@ -28,6 +27,8 @@ public class CdrRecordDao {
     @JoinColumn(name = "subsB_id", referencedColumnName = "id")
     private SubscriberDao subsB;
 
-    @Column(name = "call_start") private LocalDateTime callStart;
-    @Column(name = "call_end") private LocalDateTime callEnd;
+    @Column(name = "call_start")
+    private LocalDateTime callStart;
+    @Column(name = "call_end")
+    private LocalDateTime callEnd;
 }

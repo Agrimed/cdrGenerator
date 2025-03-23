@@ -15,7 +15,6 @@ import java.util.Random;
 
 /**
  * CdrGeneratorService generate cdr's
- *
  */
 @Service
 public class CdrGeneratorService {
@@ -30,6 +29,7 @@ public class CdrGeneratorService {
     private final Integer maxCallLength = 60 * 60;
     private final Integer minNumberOfCalls = 10000;
     private final Integer maxNumberOfCalls = 100000;
+
     /**
      * generateCdr generate
      */
@@ -54,7 +54,7 @@ public class CdrGeneratorService {
 
             CdrRecordDao cdrRecordDao = new CdrRecordDao(null, callType, subsA, subsB, startDate, endDate);
             cdrRecords.add(cdrRecordDao);
-            startDate = startDate.plusSeconds(step + generateTimeShift(step)) ;
+            startDate = startDate.plusSeconds(step + generateTimeShift(step));
         }
 
         cdrRepository.saveAll(cdrRecords);
@@ -79,7 +79,6 @@ public class CdrGeneratorService {
     private Integer generateCallType() {
         return generator.nextBoolean() ? 1 : 2;
     }
-
 
 
 }
