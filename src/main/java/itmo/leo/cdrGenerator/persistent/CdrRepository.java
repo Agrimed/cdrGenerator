@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -74,4 +75,7 @@ public interface CdrRepository extends JpaRepository<CdrRecordDao, Long> {
      */
     @NativeQuery("select sum(datediff(SECOND, call_start, call_end)) from cdr_record where subsB_id = ?1 and extract(month from call_end) = ?2")
     Long findIncomingCallByIdAndMonth(Long id, Integer month);
+
+    @NativeQuery("select * from cdr_record where (subsA_id = ?1 or subsB_id = ?1) and call_start >= ?2 and call_end < ?3")
+    List<CdrRecordDao> findCallsByDateRange(Long id, LocalDateTime start, LocalDateTime end);
 }

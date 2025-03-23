@@ -53,4 +53,11 @@ public class CdrRecordDao {
      */
     @Column(name = "call_end")
     private LocalDateTime callEnd;
+
+    @Override
+    public String toString() {
+        return String.format("%02d, %s, %s, %s, %s",
+                callType, subsA.getMsisdn(), subsB.getMsisdn(), callStart.toString(), callEnd.toString());
+    }
+
 }

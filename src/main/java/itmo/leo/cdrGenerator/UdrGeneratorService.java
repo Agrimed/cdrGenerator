@@ -20,32 +20,6 @@ public class UdrGeneratorService {
     SubsRepository subsRepository;
 
     /**
-     * Возвращает общее время исходящих звонков для заданного абонента по MSISDN.
-     *
-     * @param msisdn номер абонента
-     * @return общее время исходящих звонков в секундах
-     */
-    public Long getAllCdrByMsisdn(String msisdn) {
-        SubscriberDao subscriberDao = subsRepository.findByMsisdn(msisdn).get();
-//        return cdrRepository.getBySubsAOrSubsB(subscriberDao, subscriberDao);
-        Long timeInterval = cdrRepository.findOutcomingCallById(subscriberDao.getId());
-        return timeInterval;
-    }
-
-    /**
-     * Возвращает общее время исходящих звонков для заданного абонента по MSISDN за указанный месяц.
-     *
-     * @param msisdn номер абонента
-     * @param month  месяц для выборки данных
-     * @return общее время исходящих звонков в секундах за указанный месяц
-     */
-    public Long getAllCdrByMsidnAndMonth(String msisdn, Integer month) {
-        SubscriberDao subscriberDao = subsRepository.findByMsisdn(msisdn).get();
-        Long timeIntervalByMonth = cdrRepository.findIncomingCallByIdAndMonth(subscriberDao.getId(), month);
-        return timeIntervalByMonth;
-    }
-
-    /**
      * Возвращает UDR для заданного абонента.
      *
      * @param subs объект subscriberDao

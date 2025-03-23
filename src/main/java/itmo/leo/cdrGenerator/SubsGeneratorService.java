@@ -40,16 +40,4 @@ public class SubsGeneratorService {
         return subsRepository.saveAll(subscriberDaoList).size();
     }
 
-
-    /**
-     * Возвращает случайный идентификатор абонента из списка.
-     *
-     * @param list список абонентов
-     * @return случайный идентификатор абонента
-     */
-    private Long getRandomSubsId(List<SubscriberDao> list) {
-        Integer index = random.nextInt() % list.size();
-        return list.get(index).getId();
-    }
-
 }
